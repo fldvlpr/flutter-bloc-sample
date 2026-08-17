@@ -12,6 +12,10 @@ import 'package:mocktail/mocktail.dart';
 class MockTodoBloc extends Mock implements TodoBloc {}
 
 void main() {
+  setUpAll(() {
+    registerFallbackValue(TodosFetched());
+  });
+
   late MockTodoBloc mockTodoBloc;
 
   setUp(() {
@@ -22,10 +26,18 @@ void main() {
   });
 
   // Helper function to build our widget for testing
-  Widget createWidgetUnderTest() {
-    final router = GoRouter(
-      initialLocation: '/create',
+  Widget createWidgetUnderTest(GoRouter router) {
+    return MaterialApp.router(routerConfig: router);
+  }
+
+  GoRouter _createRouter() {
+    return GoRouter(
+      initialLocation: '/home',
       routes: [
+        GoRoute(
+          path: '/home',
+          builder: (context, state) => const Scaffold(body: Text('Home')),
+        ),
         GoRoute(
           path: '/create',
           builder: (context, state) {
@@ -35,16 +47,8 @@ void main() {
             );
           },
         ),
-        GoRoute(
-          path: '/home',
-          builder: (context, state) {
-            return const Scaffold(body: Text('Home'));
-          },
-        ),
       ],
     );
-
-    return MaterialApp.router(routerConfig: router);
   }
 
   group('CreateTodoScreen', () {
@@ -52,7 +56,11 @@ void main() {
       tester,
     ) async {
       // ACT
-      await tester.pumpWidget(createWidgetUnderTest()); // Render Create mode
+      final router = _createRouter();
+      await tester.pumpWidget(createWidgetUnderTest(router));
+      router.push('/create');
+      await tester.pumpAndSettle();
+
       await tester.tap(find.text('Create')); // Tap submit without typing
       await tester.pump(); // Force UI to redraw validation errors
 
@@ -64,13 +72,17 @@ void main() {
       tester,
     ) async {
       // Arrange
-      await tester.pumpWidget(createWidgetUnderTest());
+      final router = _createRouter();
+      await tester.pumpWidget(createWidgetUnderTest(router));
+      router.push('/create');
+      await tester.pumpAndSettle();
+
       final titleField = find.byType(TextFormField);
       await tester.enterText(titleField, 'Buy groceries');
 
       // Act
       await tester.tap(find.text('Create'));
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Assert
       final captured = verify(() => mockTodoBloc.add(captureAny())).captured;
