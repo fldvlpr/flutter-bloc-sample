@@ -11,43 +11,38 @@ class TodoDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TodoDetailCubit(
-        todoRepository: getIt<TodoRepository>(),
-      )..fetchTodoDetail(todoId),
-      child: Scaffold(
-        appBar: AppBar(title: const Text('Todo Detail')),
-        body: BlocBuilder<TodoDetailCubit, TodoDetailState>(
-          builder: (context, state) {
-            if (state is TodoDetailInitial || state is TodoDetailLoadInProgress) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is TodoDetailLoadFailure) {
-              return Center(child: Text('Error: ${state.error}'));
-            } else if (state is TodoDetailLoadSuccess) {
-              final todo = state.todo;
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('ID: ${todo.id}', style: const TextStyle(fontSize: 20)),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Title: ${todo.title}',
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
+    return Scaffold(
+      appBar: AppBar(title: const Text('Todo Detail')),
+      body: BlocBuilder<TodoDetailCubit, TodoDetailState>(
+        builder: (context, state) {
+          if (state is TodoDetailInitial || state is TodoDetailLoadInProgress) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is TodoDetailLoadFailure) {
+            return Center(child: Text('Error: ${state.error}'));
+          } else if (state is TodoDetailLoadSuccess) {
+            final todo = state.todo;
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('ID: ${todo.id}', style: const TextStyle(fontSize: 20)),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Title: ${todo.title}',
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
-                    const SizedBox(height: 8),
-                    Text('Completed: ${todo.completed}'),
-                  ],
-                ),
-              );
-            }
-            return const SizedBox.shrink();
-          },
-        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 8),
+                  Text('Completed: ${todo.completed}'),
+                ],
+              ),
+            );
+          }
+          return const SizedBox.shrink();
+        },
       ),
     );
   }
