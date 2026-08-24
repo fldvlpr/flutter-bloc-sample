@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_sample/features/todos/domain/todo.dart';
 import 'package:flutter_bloc_sample/features/todos/presentation/bloc/todo_detail_cubit.dart';
-import 'package:flutter_bloc_sample/features/todos/presentation/bloc/todo_state.dart';
 import 'package:flutter_bloc_sample/features/todos/presentation/screens/todo_detail_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
