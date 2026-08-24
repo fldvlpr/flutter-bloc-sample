@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_sample/features/todos/domain/todo.dart';
 import 'package:flutter_bloc_sample/features/todos/presentation/bloc/todo_bloc.dart';
 import 'package:flutter_bloc_sample/features/todos/presentation/bloc/todo_event.dart';
-import 'package:flutter_bloc_sample/features/todos/presentation/bloc/todo_state.dart';
 import 'package:flutter_bloc_sample/features/todos/presentation/screens/create_todo_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
