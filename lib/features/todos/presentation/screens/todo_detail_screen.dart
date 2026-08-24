@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bloc_sample/core/di/injection.dart';
-import 'package:flutter_bloc_sample/features/todos/data/todo_repository.dart';
 import 'package:flutter_bloc_sample/features/todos/presentation/bloc/todo_detail_cubit.dart';
 
 class TodoDetailScreen extends StatelessWidget {
