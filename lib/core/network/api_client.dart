@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiClient {
-  final _baseUrl = 'https://jsonplaceholder.typicode.com';
+  final _baseUrl = 'https://dummyjson.com';
 
   Future<dynamic> get(String endpoint) async {
     final response = await http.get(Uri.parse('$_baseUrl$endpoint'));
